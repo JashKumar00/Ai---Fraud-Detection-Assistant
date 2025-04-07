@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fraud Detection Assistant</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f3f4f6;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      margin-top: 30px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      flex: 1;
+      min-width: 300px;
+      max-width: 500px;
+    }
+
+    .card h2 {
+      margin-bottom: 15px;
+      font-size: 20px;
+      color: #111827;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #ef4444;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #dc2626;
+    }
+
+    .chatbox {
+      height: 200px;
+      overflow-y: auto;
+      background: #f9fafb;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+
+    .chat-input {
+      display: flex;
+      gap: 10px;
+    }
+
+    .chat-input input {
+      flex: 1;
+    }
+
+    .bot-msg {
+      color: #3b82f6;
+      margin-bottom: 5px;
+    }
+
+    .user-msg {
+      color: #10b981;
+      margin-bottom: 5px;
+      text-align: right;
+    }
+  </style>
+</head>
+<body>
+  <h1>Fraud Detection Assistant</h1>
+
+  <div class="container">
+    <!-- Fraud Detection Form -->
+    <div class="card">
+      <h2>Check for Fraud</h2>
+      <input type="text" id="transactionId" placeholder="Enter transaction ID or details" />
+      <textarea id="description" placeholder="Describe the suspicious activity..."></textarea>
+      <button onclick="analyzeFraud()">Analyze</button>
+      <p id="analysisResult" style="margin-top:10px; font-weight: bold;"></p>
+    </div>
+
+    <!-- Chatbot -->
+    <div class="card">
+      <h2>Fraud Detection Chatbot</h2>
+      <div class="chatbox" id="chatbox">
+        <div class="bot-msg">Bot: Hi there! Describe your concern or share transaction details.</div>
+      </div>
+      <div class="chat-input">
+        <input type="text" id="userInput" placeholder="Type your message..." />
+        <button onclick="sendMessage()">Send</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function analyzeFraud() {
+      const transactionId = document.getElementById('transactionId').value;
+      const description = document.getElementById('description').value;
+      const result = document.getElementById('analysisResult');
+
+      if (transactionId && description) {
+        result.textContent = '🔍 Analysis complete: No obvious fraud detected.';
+      } else {
+        result.textContent = '⚠️ Please fill in all fields.';
+      }
+    }
+
+    function sendMessage() {
+      const input = document.getElementById('userInput');
+      const chatbox = document.getElementById('chatbox');
+
+      if (input.value.trim() === '') return;
+
+      const userMsg = document.createElement('div');
+      userMsg.className = 'user-msg';
+      userMsg.textContent = `You: ${input.value}`;
+      chatbox.appendChild(userMsg);
+
+      const botMsg = document.createElement('div');
+      botMsg.className = 'bot-msg';
+      botMsg.textContent = 'Bot: Thanks for your message. We are analyzing it.';
+      chatbox.appendChild(botMsg);
+
+      chatbox.scrollTop = chatbox.scrollHeight;
+      input.value = '';
+    }
+  </script>
+</body>
+</html>
